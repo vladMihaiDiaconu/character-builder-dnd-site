@@ -1,0 +1,75 @@
+---
+const {data} = Astro.props;
+---
+<form class="py-3 md:py-10 px-2 md:px-5 h-full">
+    <div id="progress-1-race">
+        <label class="">Choose your race:</label>
+        <select class="flex flex-col w-52 rounded-xl py-1 my-1">
+            <option class="hidden">Select</option>
+        {
+            races.availableRaces.map((race) => (
+                <option class={`raceName_${race.name}+name`} value={race.name}>{race.name}</option>
+        ))}
+        </select>
+    </div>
+    <div id="racial-traits" class="flex flex-col py-5 md:py-10 gap-y-2">
+        <p class="whitespace-break-spaces px-5 md:px-10 text-[10px] pb-4" id={`race+flavourText`}></p>
+        <p class="whitespace-break-spaces px-5 md:px-10 text-[10px]" id={`race+ASI`}></p>
+        <p class="whitespace-break-spaces px-5 md:px-10 text-[10px]" id={`race+Size`}></p>
+        <p class="whitespace-break-spaces px-5 md:px-10 text-[10px]" id={`race+Speed`}></p>
+        <p class="whitespace-break-spaces px-5 md:px-10 text-[10px]" id={`race+Darkvision`}></p>
+        <p class="whitespace-break-spaces px-5 md:px-10 text-[10px]" id={`race+bonusProficiencies`}></p>
+        <p class="whitespace-break-spaces px-5 md:px-10 text-[10px]" id={`race+racialFeatures`}></p>
+        <p class="whitespace-break-spaces px-5 md:px-10 text-[10px]" id={`race+languages`}></p>
+    </div>
+</form>
+<script>
+
+
+    const flavourTextArea = document.getElementById('race+flavourText')
+    const asiTextArea = document.getElementById('race+ASI')
+    const languagesTextArea = document.getElementById('race+languages')
+    const racialFeaturesTextArea = document.getElementById('race+racialFeatures')
+    const bonusProficienciesTextArea = document.getElementById('race+bonusProficiencies')
+    const darkvisionTextArea = document.getElementById('race+Darkvision')
+    const speedTextArea = document.getElementById('race+Size')
+    const sizeTextArea = document.getElementById('race+Speed')
+    const raceSelector = document.getElementById('progress-1-race')
+    const raceOptions = document.querySelectorAll('[class^=raceName_]')
+
+    raceSelector?.addEventListener('change', (e) => {
+        const choosenRace = e?.target?.value;
+        const {
+            name, 
+            flavourText, 
+            fixedASI,
+            ASI, 
+            speed, 
+            darkvision, 
+            bonusProficiencies, 
+            languages,
+            size,
+            features
+        } = races.availableRaces.find(race => choosenRace === race.name)
+
+        var improvements = [];
+        for(const [ability, score] of Object.entries(ASI)){
+            if(score !== ""){
+                improvements.push(`${ability}:+` + score + "\n");
+            }
+        }
+        var racialFeatures = [];
+        for(const [racialName, racialEffect] of Object.entries(features))
+            racialFeatures.push(`${racialName}.`.bold() +` ${racialEffect}` + '\n')
+
+        flavourTextArea.innerText = flavourText;
+        if(fixedASI) asiTextArea.innerHTML = "Ability Score Improvement: \n".bold() + improvements.join("");
+        speedTextArea.innerHTML = "Speed: ".bold() + speed + " ft.";
+        sizeTextArea.innerHTML = "Size: ".bold() + size;
+        darkvisionTextArea.innerHTML = "Darkvision: ".bold() + darkvision;
+        bonusProficienciesTextArea.innerHTML = "Bonus Proficiencies: ".bold() + bonusProficiencies; 
+        languagesTextArea.innerHTML = "Languages: \n".bold() + languages.join("\n");
+        racialFeaturesTextArea.innerHTML = "Racial Features: \n".bold() + racialFeatures.join("");
+
+    })
+</script>

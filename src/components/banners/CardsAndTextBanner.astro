@@ -1,0 +1,22 @@
+---
+import DisplayCard from "../cards/DisplayCard.astro"
+
+const {title, text, displayCardsArray} = Astro.props;
+---
+<div class="bg-[#31422c] flex flex-col justify-center items-center my-5 md:my-10 mx-5 md:mx-10 rounded-2xl pb-10">
+    <h1 class="font-serif text-white text-xl px-10 pt-10">{title}</h1>
+    <p class="font-serif text-white text-xs px-10 md:px-20 py-10">{text}</p>
+    <div class="max-md:flex-col md:grid-cols-2 lg:grid-cols-3 md:grid md:gap-x-5 lg:gap-y-10">
+        {
+            displayCardsArray.map((card: { title: string; text: string; imageUrl: string; imageAlt: string; buttonLink: string; }) => (
+                <DisplayCard 
+                    title={card.title}
+                    text={card.text}
+                    imageUrl={card.imageUrl}
+                    imageAlt={card.imageAlt}
+                    buttonLink={card.buttonLink}
+                />
+            ))
+        }
+    </div>
+</div>

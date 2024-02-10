@@ -1,0 +1,7 @@
+---
+const {text, link, buttonPrompt} = Astro.props;
+---
+<section class="bg-[#364030] flex mx-5 lg:mx-10 my-5 py-10 justify-center items-center rounded-2xl font-serif flex-col">
+    <h1 class="text-white text-center pb-5">{text}</h1>
+    {buttonPrompt && <a class="my-2 bg-[#f8f5cf] rounded-xl px-5 py-3" href={link} aria-label={buttonPrompt}>{buttonPrompt}</a>}
+</section>

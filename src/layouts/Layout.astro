@@ -1,0 +1,85 @@
+---
+import {
+  getNavigation,
+  getSocials,
+  getBaseUrl,
+  Resource,
+  Page,
+} from '../lib/strapi'
+import { transformMenu } from '../lib/utils'
+import Header from '../components/navigation/NavigationBar.astro'
+import Footer from '../components/navigation/FooterNavigation.astro'
+
+const { title, description, image, seo, pageType, published, resourceType } =
+  Astro.props
+
+const mainNavigation = await getNavigation('main-navigation')
+const mainItems = transformMenu(mainNavigation)
+
+const footerNavigation = await getNavigation('footer-navigation')
+const footerItems = transformMenu(footerNavigation)
+
+const socials = await getSocials()
+const socialItems = socials.map(({ attributes: { type, url } }) => ({
+  type,
+  url,
+}))
+---
+
+<html lang="en" class="scroll-auto bg-black motion-safe:scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content={title} />
+    <title>{`${title} | ${"Character Builder D&D"}`}</title>
+    {
+      description && (
+        <>
+          <meta name="description" content={description} />
+          <meta property="og:description" content={description} />
+        </>
+      )
+    }
+    {
+      image?.data?.attributes?.url && (
+        <>
+          <meta
+            property="og:image"
+            content={getBaseUrl(image.data.attributes.url)}
+          />
+          <meta property="og:image:type" content={image.data.attributes.mime} />
+          <meta
+            property="og:image:alt"
+            content={image.data.attributes?.alternativeText || ''}
+          />
+        </>
+      )
+    }
+    {
+      seo && (
+        <>
+          {seo?.keywords && <meta name="keywords" content={seo.keywords} />}
+          {seo?.metaRobots && <meta name="robots" content={seo.metaRobots} />}
+          {seo?.canonicalURL && (
+            <link rel="canonical" href={seo.canonicalURL} />
+          )}
+          {seo?.structuredData && (
+            <script
+              type="application/ld+json"
+              set:html={JSON.stringify(seo.structuredData)}
+            />
+          )}
+        </>
+      )
+    }
+  </head>
+  <!-- ids on <body> and <main> are for content skip buttons (scroll to top, skip to main content) -->
+  <body class="scroll-smooth bg-black" id="top">
+    <Header items={mainItems} />
+    <main class="bg-black" id="main">
+          <slot />
+    </main>
+    <Footer items={footerItems} {socialItems} />
+  </body>
+</html>

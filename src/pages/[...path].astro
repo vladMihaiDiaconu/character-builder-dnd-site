@@ -1,0 +1,59 @@
+---
+import { getPageBlocksByPageId, getPageMetadataByPath } from '../../src/lib/strapi'
+import '../styles/main.css'
+import Layout from '../layouts/Layout.astro'
+import ALL_COMPONENTS from '../components/index'
+import { status } from '../lib/utils'
+
+const path = Astro.params.path ?? 'index'
+const page = await getPageMetadataByPath(path)
+
+if (!page) {
+  return status(404, `${Astro.url.origin}/404`)
+}
+
+const {
+  id,
+  title,
+  description,
+  image,
+  seo,
+  pageType,
+  published,
+  resourceType,
+} = page
+
+const blocks = await getPageBlocksByPageId(id, pageType)
+---
+
+<Layout
+  {title}
+  {description}
+  {image}
+  {seo}
+  {pageType}
+  {published}
+  {resourceType}
+>
+  {
+    blocks.map((block) => {
+      // Extract the target component name
+      const { __component: targetComponent } = block
+
+      // Find the index of the target component in COMPONENTS array
+      const index = ALL_COMPONENTS.findIndex(
+        (component) => component.name === targetComponent
+      )
+
+      // Check if the target component exists
+      if (index !== -1) {
+        const componentInfo = ALL_COMPONENTS[index]
+
+        // Extract the component to render
+        const ComponentToRender = ALL_COMPONENTS[index].component
+        // Render the component with the extracted data
+        return <ComponentToRender {...block} />
+      }
+    })
+  }
+</Layout>

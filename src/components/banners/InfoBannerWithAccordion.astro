@@ -1,0 +1,48 @@
+---
+const {title, text, textAndIconsArray} = Astro.props;
+---
+<section class="bg-[#f8f5cf] flex flex-col justify-center mx-5 rounded-2xl my-5 md:my-10 md:mx-10 py-10 md:px-10 px-5">
+    <div class="items-center flex flex-col">
+        <h1 class="text-base md:text-xl font-serif" >{title}</h1>
+        <p class="text-xs md:text-base font-serif py-10">{text}</p>
+    </div>
+    {textAndIconsArray.map((step: any, index) =>(
+        <div class="font-serif flex max-sm:gap-x-3 py-3">
+            <div class="flex flex-col w-[80%] md:w-[90%]">
+                <h2 class="text-[10px] md:text-base">{step.title}</h2>
+                <p id={index} class="hidden accordion-text text-[10px] md:text-xs py-5">{step.text}</p>
+            </div>
+            <div>
+                <button id={`toggle-accordion-${index}`} aria-label='Toggle accordion' class="toggle-accordion-button"><img class=" w-5 md:w-7 lg:w-10 rotate-225" src={step.icon} alt={step.iconAlt}></button>
+            </div>
+        </div>
+    ))}    
+</section>
+
+<script>
+    const accordionTexts = document.getElementsByClassName('accordion-text');
+    const toggleAccordionTextButtons = document.getElementsByClassName('toggle-accordion-button');
+    let lastClicked = null;
+    for(let button of toggleAccordionTextButtons) {
+        button?.addEventListener('click', () => {
+            if (lastClicked && lastClicked !== button) {
+                lastClicked.style.transform = 'rotate(0deg)';
+            }
+            button.style.transform = button.style.transform === 'rotate(-90deg)' ? 'rotate(0deg)' : 'rotate(-90deg)';
+            lastClicked = button;
+
+            accordionTexts[parseInt(button.id.split('-')[2])].classList.toggle('hidden')
+            for(let accordion of accordionTexts) {
+                if(accordion.id !== button.id.split('-')[2]){
+                    accordion.classList.add('hidden')
+                }
+
+            }
+        })
+    }
+</script>
+<style>
+.toggle-accordion-button {
+    transition: transform 0.5s;
+}
+</style>

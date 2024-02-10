@@ -1,0 +1,37 @@
+---
+import MobileSubNavigation from "./MobileSubNavigation.astro"
+
+---
+<MobileSubNavigation />
+<nav class="bg-[#202e20] flex justify-between px-5 xl:px-10 content-center font-serif ">
+        <img 
+            class="xl:h-20 xl:w-14 w-8 h-14 py-2 object-contain" 
+            src="../icons/main-icon.png" 
+            alt="Token of green and golden leaves that make up the sign of a druid circle.">
+        </img>
+    <div class="max-xl:hidden"></div>
+    <a href="/homepage"><p class="text-white  max-xl:text-sm text-3xl pt-5">Character Builder</p></a>
+    <ul class="flex max-xl:hidden text-white xl:px-10 md:gap-x-5 gap-x-10 pt-10 text-[8px]">
+        <li><a class="hover-underline-animation" href="./create-new-character">Create a New Character</a></li>
+        <li><a class="hover-underline-animation" href="./character-list">Load My Characters</a></li>
+        <li><a class="hover-underline-animation" href="./resources">Resources</a></li>
+        <li><a class="hover-underline-animation" href="./my-account">My Account</a></li>
+    </ul>
+    <button class="md:pr-5 pt-1 xl:hidden" id="mobile-subnavigation-button-open" aria-label="Open mobile subnavigation">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+                
+    </button> 
+</nav>
+<script>
+    const mobileSubnavigationButtonOpen = document.getElementById('mobile-subnavigation-button-open');
+    const mobileSubnavigationButtonClose = document.getElementById('mobile-subnavigation-button-close');
+    const mobileSubnavigationMenu = document.getElementById('mobile-subnavigation');
+
+    const toggleSubnavigationMenu = () => {
+        mobileSubnavigationMenu?.classList.toggle('hidden');
+    }
+    mobileSubnavigationButtonOpen?.addEventListener('click', toggleSubnavigationMenu)
+    mobileSubnavigationButtonClose?.addEventListener('click', toggleSubnavigationMenu)
+</script>
