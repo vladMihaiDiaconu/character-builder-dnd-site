@@ -19,6 +19,7 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@types/qs": "^6.9.11"
+    "@types/qs": "^6.9.11",
+    "cypress": "^13.6.6"
   }
 }
