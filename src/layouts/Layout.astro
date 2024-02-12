@@ -10,7 +10,7 @@ import { transformMenu } from '../lib/utils'
 import Header from '../components/navigation/NavigationBar.astro'
 import Footer from '../components/navigation/FooterNavigation.astro'
 
-const { title, description, image, seo, pageType, published, resourceType } =
+const { title, description, image, seo } =
   Astro.props
 
 const mainNavigation = await getNavigation('main-navigation')

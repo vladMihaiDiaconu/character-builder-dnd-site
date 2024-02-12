@@ -1,5 +1,6 @@
 import BannerWithAccordion from "./banners/BannerWithAccordion.astro";
 import CardsAndTextBanner from "./banners/CardsAndTextBanner.astro";
+import DisplayCard from "./cards/DisplayCard.astro";
 import HeroBanner from "./banners/HeroBanner.astro";
 import Stripe from "./misc/Stripe.astro";
 
@@ -19,5 +20,9 @@ export default [
     {
         name:'misc.stripe',
         component: Stripe
+    },
+    {
+        name:'cards.display-card',
+        component: DisplayCard
     },
 ]

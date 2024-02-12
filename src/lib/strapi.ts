@@ -58,9 +58,9 @@ export default async function fetchApi({
   const headers = new Headers(httpHeaders);
   const res: Response = await fetch(url, { headers });
   let data = await res.json();
-
   if (!res.ok) {
     const { error } = data;
+
     console.error(`Strapi Request failed (${url})
 Response: 
   Status: ${error.status}
@@ -93,11 +93,12 @@ export async function getPageBlocksByPageId(pageId: number, pageType: Page) {
   const data = await fetchApi({
     endpoint,
     query: {
-      populate: "*",
+      populate: "deep",
     },
 
     wrappedByKey: "data",
   });
+
   return data.attributes?.blocks;
 
   function getEndpoint() {
