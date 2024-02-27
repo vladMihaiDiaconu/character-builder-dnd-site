@@ -24,6 +24,7 @@ const {
 } = page
 
 const blocks = await getPageBlocksByPageId(id, pageType)
+console.log(page)
 ---
 
 <Layout
@@ -36,7 +37,7 @@ const blocks = await getPageBlocksByPageId(id, pageType)
   {resourceType}
 >
   {
-    blocks.map((block) => {
+    blocks.map((block : any) => {
       // Extract the target component name
       const { __component: targetComponent } = block
 
