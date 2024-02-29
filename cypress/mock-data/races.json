@@ -1,0 +1,27 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": [
+        {
+          "raceName": "Elf",
+          "createdAt": "2024-02-28T14:21:39.464Z",
+          "updatedAt": "2024-02-28T18:47:22.480Z",
+          "flavorText": "Elves are a magical people of otherworldly grace, living in places of ethereal beauty, in the midst of ancient forests or in silvery spires glittering with faerie light, where soft music drifts through the air and gentle fragrances waft on the breeze. Elves love nature and magic, art and artistry, music and poetry.",
+          "abilityScoreIncrease": "Dexterity + 2",
+          "racial_features": {
+            "data": [
+              {
+                "id": 1,
+                "attributes": {
+                  "racialFeatureName": "Darkvision",
+                  "racialFeatureEffect": "Accustomed to twilit forests and the night sky, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

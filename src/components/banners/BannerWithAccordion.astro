@@ -1,5 +1,8 @@
 ---
 import RaceForm from '../../components/character-creation-forms/RaceForm.astro'
+
+const {raceForm} = Astro.props;
+const races =  raceForm.races
 ---
 <section class="flex flex-col justify-left sm:mx-10 md:mx-20 xl:mx-52 font-serif text-[6.5px] sm:text-[8px] md:text-xs py-10">
     <div>
@@ -17,13 +20,13 @@ import RaceForm from '../../components/character-creation-forms/RaceForm.astro'
         </ol>
     </div>
     <div class="bg-[#bdab84] rounded-r-xl rounded-b-xl">
-        <RaceForm />
+        <RaceForm races={races} />
     </div>
 </section>
 <script>
     const progressionButtons = document.getElementsByClassName('progress-button')
-    progressionButtons[0].classList.remove('bg-[#f8f5cf]')
-    progressionButtons[0].classList.add('bg-[#bdab84]')
+    progressionButtons[0]?.classList.remove('bg-[#f8f5cf]')
+    progressionButtons[0]?.classList.add('bg-[#bdab84]')
     for(let button of progressionButtons) {
         button.addEventListener('click', () =>{
             button.classList.remove('bg-[#f8f5cf]')
