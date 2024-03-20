@@ -8,14 +8,14 @@ const {races} = Astro.props;
             <option class="hidden">Select</option>
         {
             races.data.map((race) => (
-                <option id={`raceName_${race.attributes.raceName}`} value={race.attributes.raceName}>{race.attributes.raceName}</option>
+                <option id={`raceName_${race.attributes.raceName.replace(/\s+/g,'')}`} value={race.attributes.raceName.replace(/\s+/g,'')}>{race.attributes.raceName}</option>
         ))}
         </select>
     </div>
     <div id="racial-traits" class="flex flex-col py-5 md:py-10 gap-y-2">
         {
             races.data.map((race) => (
-                <div class="hidden"  id={race.attributes.raceName}>
+                <div class="hidden"  id={race.attributes.raceName.replace(/\s+/g,'')}>
                     <p class="whitespace-break-spaces px-5 text-[10px] pb-4">{race.attributes.flavorText}</p>
                     <p id="ASI" class="whitespace-break-spaces px-5 text-[10px] pb-4">
                         <b>Ability Score Increase.</b> {race.attributes.abilityScoreIncrease}
@@ -35,5 +35,14 @@ const {races} = Astro.props;
     selector?.addEventListener('change', () => {
         const details = document.getElementById(selector.options[selector.selectedIndex].id.split('raceName_')[1])
         details?.classList.remove('hidden')
+
+        const otherContainers = document.getElementById('racial-traits')?.children
+        if(otherContainers){
+            for(let container of otherContainers){
+                if(container !== details)
+                    container.classList.add('hidden')
+            }
+        }
+
     })
 </script>
