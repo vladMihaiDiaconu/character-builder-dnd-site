@@ -10,11 +10,46 @@
       </div>
       <button id="roll-button" aria-role="roll the dice" class="border-[1] rounded-xl px-3 py-1 bg-[#202E20] text-white my-5">Roll Dice</button>
       <div id="sum-display" class="py-2">Rolls: </div>
+      <form id="main-attributes-form" class="flex lg:flex-row flex-col hidden">
+        <div class="pl-2">
+            <label>Strength</label>
+            <select class="px-5 attribute-selector" id="strength"></select>
+        </div>
+        <div class="pl-2">
+            <label>Dexterity</label>
+            <select class="px-5 attribute-selector" id="dexterity"></select>
+        </div>
+        <div class="pl-2">
+            <label>Constitution</label>
+            <select class="px-5 attribute-selector" id="constitution"></select>
+        </div>
+        <div class="pl-2">
+            <label>Intelligence</label>
+            <select class="px-5 attribute-selector" id="intelligence"></select>
+        </div>
+        <div class="pl-2">
+            <label>Wisdom</label>
+            <select class="px-5 attribute-selector" id="wisdom"></select>
+        </div>
+        <div class="pl-2">
+            <label>Charisma</label>
+            <select class="px-5 attribute-selector" id="charisma"></select>
+        </div>
+
+      </form>
 </section>
 <script>
     const dice = document.querySelectorAll('.dice');
     const rollButton = document.getElementById('roll-button');
     const sumDisplay = document.getElementById('sum-display');
+    const attributeSelects = document.querySelectorAll(".attribute-selector");
+    attributeSelects.forEach(attribute => {
+        const defaultOption = document.createElement("option");
+        defaultOption.textContent = "Select";
+        defaultOption.value = "";
+        attribute.appendChild(defaultOption);
+    })
+
     let rollHistory = [];
     let rollCount = 0;
 
@@ -48,11 +83,26 @@
         if (rollCount >= 6) {
         rollButton.disabled = true;
         rollButton.textContent = "That's it! You now have 6 scores for your 6 attributes. Assign them however you wish!";
+        document.dispatchEvent(new Event('finished-rolling'))
         }
     }, 500);
     }
 
     rollButton?.addEventListener('click', rollDice);
+    document.addEventListener('finished-rolling', () =>
+        {
+            document.getElementById('main-attributes-form')?.classList.remove('hidden')
+            attributeSelects.forEach((attribute) => {
+                rollHistory.forEach(roll => {
+                    const option = document.createElement('option');
+                    option.value = roll;
+                    option.textContent = roll;
+                    attribute.appendChild(option)
+                })
+            })
+        }
+    ) 
+
 </script>
 <style>
     .dice {
