@@ -2,12 +2,14 @@
 ---
 <section class="px-5 pt-5">
     <h2 class="text-[10px]">Roll the dice to determine your character's attributes:</h2>
-    <div id="dice-container" class="flex flex-row pt-5">
-        <div class="dice">1</div>
-        <div class="dice">2</div>
-        <div class="dice">3</div>
-        <div class="dice">4</div>
-    </div>
+    <div id="dice-container" class="flex flex-row px-5">
+        <div class="dice">0</div>
+        <div class="dice">0</div>
+        <div class="dice">0</div>
+        <div class="dice">0</div>
+      </div>
+      <button id="roll-button" class="border-[1] rounded-xl px-3 py-1 bg-[#202E20] text-white my-5">Roll Dice</button>
+      <div id="sum-display" class="py-2">Rolls: </div>
 </section>
 
 
@@ -34,16 +36,41 @@
 }
 </style>
 <script>
-document.getElementById('dice-container').addEventListener('click', () => {
-  document.querySelectorAll('.dice').forEach(die => {
-    die.style.animation = 'none';
+    const dice = document.querySelectorAll('.dice');
+    const rollButton = document.getElementById('roll-button');
+    const sumDisplay = document.getElementById('sum-display');
+    let rollHistory = [];
+    let rollCount = 0;
 
-    setTimeout(() => {
-      die.style.animation = 'roll 1s forwards';
-      setTimeout(() => {
-        die.textContent = Math.ceil(Math.random() * 6);
-      }, 400);
-    }, 10);
-  });
-});
+    rollButton.addEventListener('click', () => {
+    if (rollCount > 6) {
+        alert("You've reached the maximum number of rolls!");
+        return;
+    }
+
+    let currentRolls = [];
+    dice.forEach(die => {
+        const rollValue = Math.ceil(Math.random() * 6);
+        die.textContent = rollValue;
+        currentRolls.push(rollValue);
+    });
+
+    // Sort the rolls to easily pick the top 3
+    currentRolls.sort((a, b) => b - a);
+    
+    // Sum the top 3 rolls
+    const sumTopThree = currentRolls.slice(0, 3).reduce((acc, curr) => acc + curr, 0);
+    rollHistory.push(sumTopThree);
+    rollCount++;
+
+    // Update the display
+    sumDisplay.textContent = `Rolls: ${rollHistory.join(', ')}`;
+
+    // Optionally, disable the roll button after 6 rolls
+    if (rollCount >= 6) {
+        rollButton.disabled = true;
+        rollButton.textContent = "Now you have 6 scores to assign to each of your 6 attributes.";
+    }
+    });
+
 </script>
