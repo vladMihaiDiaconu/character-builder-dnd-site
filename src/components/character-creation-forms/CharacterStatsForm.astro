@@ -8,10 +8,9 @@
         <div class="dice">0</div>
         <div class="dice">0</div>
       </div>
-      <button id="roll-button" class="border-[1] rounded-xl px-3 py-1 bg-[#202E20] text-white my-5">Roll Dice</button>
+      <button id="roll-button" aria-role="roll the dice" class="border-[1] rounded-xl px-3 py-1 bg-[#202E20] text-white my-5">Roll Dice</button>
       <div id="sum-display" class="py-2">Rolls: </div>
 </section>
-
 
 <style>
 .dice {
@@ -28,12 +27,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    animation-fill-mode: forwards;
 }
 
-@keyframes roll {
-  0% { transform: rotateX(0deg) rotateY(0deg); }
-  100% { transform: rotateX(360deg) rotateY(360deg); }
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
+
+.dice.rolling {
+  animation: shake 0.5s; 
+}
+
 </style>
 <script>
     const dice = document.querySelectorAll('.dice');
@@ -42,35 +56,39 @@
     let rollHistory = [];
     let rollCount = 0;
 
-    rollButton.addEventListener('click', () => {
-    if (rollCount > 6) {
+    function rollDice() {
+    if (rollCount >= 6) {
         alert("You've reached the maximum number of rolls!");
         return;
     }
 
-    let currentRolls = [];
     dice.forEach(die => {
+        die.classList.add('rolling');
+    });
+
+    setTimeout(() => {
+        let currentRolls = [];
+        dice.forEach(die => {
         const rollValue = Math.ceil(Math.random() * 6);
         die.textContent = rollValue;
         currentRolls.push(rollValue);
-    });
+        die.classList.remove('rolling');
+        });
 
-    // Sort the rolls to easily pick the top 3
-    currentRolls.sort((a, b) => b - a);
+        currentRolls.sort((a, b) => b - a);
+        
+        const sumTopThree = currentRolls.slice(0, 3).reduce((acc, curr) => acc + curr, 0);
+        rollHistory.push(sumTopThree);
+        rollCount++;
     
-    // Sum the top 3 rolls
-    const sumTopThree = currentRolls.slice(0, 3).reduce((acc, curr) => acc + curr, 0);
-    rollHistory.push(sumTopThree);
-    rollCount++;
-
-    // Update the display
-    sumDisplay.textContent = `Rolls: ${rollHistory.join(', ')}`;
-
-    // Optionally, disable the roll button after 6 rolls
-    if (rollCount >= 6) {
+        sumDisplay.textContent = `Rolls: ${rollHistory.join(', ')}`;
+    
+        if (rollCount >= 6) {
         rollButton.disabled = true;
-        rollButton.textContent = "Now you have 6 scores to assign to each of your 6 attributes.";
+        rollButton.textContent = "That's it! You now have 6 scores for your 6 attributes. Assign them however you wish!";
+        }
+    }, 500);
     }
-    });
 
+    rollButton.addEventListener('click', rollDice);
 </script>
