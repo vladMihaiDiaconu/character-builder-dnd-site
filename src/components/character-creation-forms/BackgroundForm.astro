@@ -4,7 +4,7 @@ const {backgrounds} = Astro.props;
 <form class="py-3 md:py-10 px-2 md:px-5 h-full">
     <div>
         <label for="choosing a background" class="">Choose your background:</label>
-        <select id="progress-3-background" class="flex flex-col w-52 rounded-xl py-1 my-1">
+        <select id="progress-4-background" class="flex flex-col w-52 rounded-xl py-1 my-1">
             <option class="hidden">Select</option>
         {
             backgrounds.data.map((background) => (
@@ -14,7 +14,7 @@ const {backgrounds} = Astro.props;
     </div>
 </form>
 <script>
-    const selector = document.querySelector('#progress-3-background');
+    const selector = document.querySelector('#progress-4-background');
     selector?.addEventListener('change', () => {
         const details = document.getElementById(selector.options[selector.selectedIndex].id.split('backgroundName_')[1])
         details?.classList.remove('hidden')

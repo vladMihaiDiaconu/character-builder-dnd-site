@@ -1,44 +1,51 @@
 ---
 import RaceForm from '../../components/character-creation-forms/RaceForm.astro'
+import CharacaterStatsForm from '../../components/character-creation-forms/CharacterStatsForm.astro'
 import ClassForm from '../../components/character-creation-forms/ClassForm.astro'
 import BackgroundForm from '../../components/character-creation-forms/BackgroundForm.astro'
 import BackstoryForm from '../../components/character-creation-forms/BackstoryForm.astro'
 import DetailsForm from '../../components/character-creation-forms/DetailsForm.astro'
 
 const {raceForm, classForm, backgroundForm} = Astro.props;
+
 const races =  raceForm.races
 const classes = classForm.classes;
 const backgrounds = backgroundForm.backgrounds;
 ---
-<section class="flex flex-col justify-left sm:mx-10 md:mx-20 xl:mx-52 font-serif text-[6.5px] sm:text-[8px] md:text-xs py-12">
+<section class="flex flex-col justify-left sm:mx-10 md:mx-20 xl:mx-52 font-serif text-[5px] sm:text-[8px] md:text-xs py-12 sm:px-2">
     <div>
         <ol type="1" class="flex flex-row">
             <li id="progress-1" class="bg-[#f8f5cf] rounded-t-xl progress-button">
                 <button id="Race" class="px-1 py-2 sm:px-2 sm:py-2 md:px-3 md:py-2">Race</button></li>
             <li id="progress-2" class="bg-[#f8f5cf] rounded-t-xl progress-button">
-                <button id="Class" class="px-1 py-2 sm:px-1 sm:py-1 md:px-3 md:py-2">Class</button></li>
+                <button id="Character-stats" class="px-1 py-2 sm:px-2 sm:py-2 md:px-3 md:py-2">Character Attributes</button></li>
             <li id="progress-3" class="bg-[#f8f5cf] rounded-t-xl progress-button">
-                <button id="Background" class="px-1 py-2 sm:px-1 sm:py-1 md:px-3 md:py-2">Background</button></li>
+                <button id="Class" class="px-1 py-2 sm:px-1 sm:py-1 md:px-3 md:py-2">Class</button></li>
             <li id="progress-4" class="bg-[#f8f5cf] rounded-t-xl progress-button">
-                <button id="Backstory" class="px-1 py-2 sm:px-1 sm:py-1 md:px-3 md:py-2">Backstory</button></li>
+                <button id="Background" class="px-1 py-2 sm:px-1 sm:py-1 md:px-3 md:py-2">Background</button></li>
             <li id="progress-5" class="bg-[#f8f5cf] rounded-t-xl progress-button">
+                <button id="Backstory" class="px-1 py-2 sm:px-1 sm:py-1 md:px-3 md:py-2">Backstory</button></li>
+            <li id="progress-6" class="bg-[#f8f5cf] rounded-t-xl progress-button">
                 <button id="Details" class="px-1 py-2 sm:px-1 sm:py-1 md:px-3 md:py-2">Details</button></li>
         </ol>
     </div>
-    <div id="character-creation-forms" class="bg-[#bdab84] rounded-tr-xl">
+    <div id="character-creation-forms" class="bg-[#bdab84] sm:rounded-tr-xl min-h-[657px]">
         <div class="hidden" id="progress-1">
             <RaceForm races={races} />
         </div>
         <div class="hidden" id="progress-2">
-            <ClassForm classes={classes} />
+            <CharacaterStatsForm />
         </div>
         <div class="hidden" id="progress-3">
-            <BackgroundForm backgrounds={backgrounds} />
+            <ClassForm classes={classes} />
         </div>
         <div class="hidden" id="progress-4">
-            <BackstoryForm />
+            <BackgroundForm backgrounds={backgrounds} />
         </div>
         <div class="hidden" id="progress-5">
+            <BackstoryForm />
+        </div>
+        <div class="hidden" id="progress-6">
             <DetailsForm />
         </div>
     </div>
