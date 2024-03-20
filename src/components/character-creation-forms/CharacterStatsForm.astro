@@ -54,38 +54,38 @@
     let rollCount = 0;
 
     function rollDice() {
-    if (rollCount >= 6) {
-        alert("You've reached the maximum number of rolls!");
-        return;
-    }
-
-    dice.forEach(die => {
-        die.classList.add('rolling');
-    });
-
-    setTimeout(() => {
-        let currentRolls = [];
+        if (rollCount >= 6) {
+            alert("You've reached the maximum number of rolls!");
+            return;
+        }
         dice.forEach(die => {
-        const rollValue = Math.ceil(Math.random() * 6);
-        die.textContent = rollValue;
-        currentRolls.push(rollValue);
-        die.classList.remove('rolling');
+            die.classList.add('rolling');
         });
 
-        currentRolls.sort((a, b) => b - a);
+        setTimeout(() => {
+            let currentRolls = [];
+            dice.forEach(die => {
+            const rollValue = Math.ceil(Math.random() * 6);
+            die.textContent = rollValue;
+            currentRolls.push(rollValue);
+            die.classList.remove('rolling');
+            });
+
+            currentRolls.sort((a, b) => b - a);
+            
+            const sumTopThree = currentRolls.slice(0, 3).reduce((acc, curr) => acc + curr, 0);
+            rollHistory.push(sumTopThree);
+            rollCount++;
         
-        const sumTopThree = currentRolls.slice(0, 3).reduce((acc, curr) => acc + curr, 0);
-        rollHistory.push(sumTopThree);
-        rollCount++;
-    
-        sumDisplay.textContent = `Rolls: ${rollHistory.join(', ')}`;
-    
-        if (rollCount >= 6) {
-        rollButton.disabled = true;
-        rollButton.textContent = "That's it! You now have 6 scores for your 6 attributes. Assign them however you wish!";
-        document.dispatchEvent(new Event('finished-rolling'))
-        }
-    }, 500);
+            sumDisplay.textContent = `Rolls: ${rollHistory.join(', ')}`;
+        
+            if (rollCount >= 6) {
+            rollButton.disabled = true;
+            rollButton.textContent = "That's it! You now have 6 scores for your 6 attributes. Assign them however you wish!";
+            document.dispatchEvent(new Event('finished-rolling'))
+            }
+        }, 500)
+
     }
 
     rollButton?.addEventListener('click', rollDice);
