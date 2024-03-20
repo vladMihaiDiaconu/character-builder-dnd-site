@@ -11,6 +11,7 @@ export default {
 				'225': '225deg',
 			}
 		},
+		"rounded-tr-xl": "border-top-right-radius: 0.75rem",
 	},
 	plugins: [],
 }

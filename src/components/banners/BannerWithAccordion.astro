@@ -25,7 +25,7 @@ const backgrounds = backgroundForm.backgrounds;
                 <button id="Details" class="px-1 py-2 sm:px-1 sm:py-1 md:px-3 md:py-2">Details</button></li>
         </ol>
     </div>
-    <div id="character-creation-forms" class="bg-[#bdab84] rounded-r-xl rounded-b-xl">
+    <div id="character-creation-forms" class="bg-[#bdab84] rounded-tr-xl">
         <div class="hidden" id="progress-1">
             <RaceForm races={races} />
         </div>
@@ -42,6 +42,7 @@ const backgrounds = backgroundForm.backgrounds;
             <DetailsForm />
         </div>
     </div>
+    <button id="character-creation-submit-button" class="bg-white rounded-b-2xl py-2">Submit</button>
 </section>
 <script>
     const progressionButtons = document.getElementsByClassName('progress-button')
