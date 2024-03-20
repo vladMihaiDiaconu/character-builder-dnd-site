@@ -42,9 +42,8 @@ document.getElementById('dice-container').addEventListener('click', () => {
       die.style.animation = 'roll 1s forwards';
       setTimeout(() => {
         die.textContent = Math.ceil(Math.random() * 6);
-      }, 1000); // Match the animation duration
+      }, 400);
     }, 10);
   });
 });
-
 </script>
