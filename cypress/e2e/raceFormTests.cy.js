@@ -3,7 +3,7 @@ describe('Create New Character Page: Race Form', () => {
       cy.visit('http://localhost:4321/create-new-character');
     });
   
-    it('has correct options for race select', () => {
+    it('Has correct options for race select', () => {
       cy.get('#progress-1-race').then(select => {
         const actualOptions = [...select[0].options].map(option => option.text);
         const expectedOptions = ['Select','High Elf', 'Dark Elf'];
@@ -11,14 +11,14 @@ describe('Create New Character Page: Race Form', () => {
       });
     });
 
-    it('displays the corresponding div when a race is selected', () => {
+    it('Displays the corresponding div when a race is selected', () => {
         const raceValue = 'HighElf';        
         cy.get('#progress-1-race').select(raceValue);
         cy.get(`#${raceValue}`).should('be.visible');
         cy.get(`#${raceValue}`).should('not.have.attr', 'hidden');
     });
 
-    it('correctly toggles visibility when switching between two races', () => {
+    it('Correctly toggles visibility when switching between two races', () => {
         const options = [
           { value: 'DarkElf', expectedToShow: 'DarkElf', expectedToHide: 'HighElf' },
           { value: 'HighElf', expectedToShow: 'HighElf', expectedToHide: 'DarkElf' }
