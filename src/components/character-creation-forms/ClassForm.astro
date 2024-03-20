@@ -1,0 +1,49 @@
+---
+const {classes} = Astro.props;
+---
+<form class="py-3 md:py-10 px-2 md:px-5 h-full">
+    <div>
+        <label for="choosing a class" class="">Choose your class:</label>
+        <select id="progress-2-class" class="flex flex-col w-52 rounded-xl py-1 my-1">
+            <option class="hidden">Select</option>
+        {
+            classes.data.map((classItem) => (
+                <option id={`className_${classItem.attributes.name.replace(/\s+/g,'')}`} value={classItem.attributes.name.replace(/\s+/g,'')}>{classItem.attributes.name}</option>
+        ))}
+        </select>
+    </div>
+    <div id="class-traits" class="flex flex-col py-5 text-[10px] sm:text-[12px] md:py-10 gap-y-2">
+        {
+            classes.data.map((classItem) => (
+                <div class="hidden"  id={classItem.attributes.name.replace(/\s+/g,'')}>
+                    <p class="whitespace-break-spaces px-5  pb-4">{classItem.attributes.flavorText}</p>
+                    <p><span class="font-bold">Hit Dice:</span>{classItem.attributes.hitDice}</p>
+                    {
+                        Array.from(classItem.attributes.class_features.data).map((feature) => (
+                        <p class="py-5">
+                            <span class="font-bold">{feature?.attributes?.classFeatureName.split(' ')[1]}:</span>
+                            {JSON.stringify(feature.attributes.classFeature)}
+                        </p>
+                        ))
+                    }
+                </div>
+        ))}
+        </div>
+    </div>
+</form>
+<script>
+    const selector = document.querySelector('#progress-2-class');
+    selector?.addEventListener('change', () => {
+        const details = document.getElementById(selector.options[selector.selectedIndex].id.split('className_')[1])
+        details?.classList.remove('hidden')
+
+        const otherContainers = document.getElementById('class-traits')?.children
+        if(otherContainers){
+            for(let container of otherContainers){
+                if(container !== details)
+                    container.classList.add('hidden')
+            }
+        }
+
+    })
+</script>

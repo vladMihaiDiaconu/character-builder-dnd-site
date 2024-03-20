@@ -1,0 +1,26 @@
+---
+---
+<form class="py-3 md:py-10 px-2 md:px-5 h-full">
+    <div class="flex flex-col">
+        <label for="backstory creation" class="py-5">Write the backstory of your caracter here:</label>
+        <textarea id="backstory-textarea" class="h-[400px] font-light" aria-role="backstory-writing"/>
+    </div>
+    <p class="pt-5"><span id="wordCount">0 </span> out of 400</p>
+</form>
+<script>
+const textarea = document.getElementById('backstory-textarea');
+const wordCountDiv = document.getElementById('wordCount');
+const maxWords = 400; 
+
+textarea?.addEventListener('input', () => {
+    let words = textarea.value.split(/\s+/).filter(Boolean);
+    let wordCount = words.length;
+
+    if (wordCount > maxWords) {
+    textarea.value = words.slice(0, maxWords).join(' ');
+    wordCount = maxWords; 
+    }
+
+    wordCountDiv.textContent = `${wordCount} Word${wordCount !== 1 ? 's' : ''}`;
+});
+</script>
