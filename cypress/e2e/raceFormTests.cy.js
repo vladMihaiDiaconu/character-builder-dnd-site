@@ -1,4 +1,4 @@
-describe('Create New Character Page', () => {
+describe('Create New Character Page: Race Form', () => {
     beforeEach(() => {
       cy.visit('http://localhost:4321/create-new-character');
     });

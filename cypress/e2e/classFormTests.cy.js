@@ -1,11 +1,11 @@
-describe('Create New Character Page', () => {
+describe('Create New Character Page: Class Form', () => {
     beforeEach(() => {
       cy.visit('http://localhost:4321/create-new-character');
-      cy.get('#progress-2').click();
+      cy.get('#progress-3').click();
     });
   
     it('has correct options for class select', () => {
-      cy.get('#progress-2-class').then(select => {
+      cy.get('#progress-3-class').then(select => {
         const actualOptions = [...select[0].options].map(option => option.text);
         const expectedOptions = ['Select','Bard'];
         expect(actualOptions).to.deep.eq(expectedOptions);
@@ -14,7 +14,7 @@ describe('Create New Character Page', () => {
 
     it('displays the corresponding div when a class is selected', () => {
         const classValue = 'Bard';        
-        cy.get('#progress-2-class').select(classValue);
+        cy.get('#progress-3-class').select(classValue);
         cy.get(`#${classValue}`).should('be.visible');
         cy.get(`#${classValue}`).should('not.have.attr', 'hidden');
     });
