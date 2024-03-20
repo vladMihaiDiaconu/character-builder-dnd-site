@@ -1,2 +1,50 @@
 ---
 ---
+<section class="px-5 pt-5">
+    <h2 class="text-[10px]">Roll the dice to determine your character's attributes:</h2>
+    <div id="dice-container" class="flex flex-row pt-5">
+        <div class="dice">1</div>
+        <div class="dice">2</div>
+        <div class="dice">3</div>
+        <div class="dice">4</div>
+    </div>
+</section>
+
+
+<style>
+.dice {
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    text-align: center;
+    line-height: 10px;
+    font-size: 10px;
+    border: 2px solid #000;
+    margin: 5px;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes roll {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+</style>
+<script>
+document.getElementById('dice-container').addEventListener('click', () => {
+  document.querySelectorAll('.dice').forEach(die => {
+    die.style.animation = 'none';
+
+    setTimeout(() => {
+      die.style.animation = 'roll 1s forwards';
+      setTimeout(() => {
+        die.textContent = Math.ceil(Math.random() * 6);
+      }, 1000); // Match the animation duration
+    }, 10);
+  });
+});
+
+</script>
