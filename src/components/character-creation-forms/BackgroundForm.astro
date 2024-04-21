@@ -12,6 +12,20 @@ const {backgrounds} = Astro.props;
         ))}
         </select>
     </div>
+    <div id="background-traits" class="flex flex-col py-5 text-[10px] sm:text-[12px] md:py-10 gap-y-2">
+        {
+            backgrounds.data.map((background: any) => (
+                <div id={background.attributes.backgroundName.replace(/\s+/g,'')} class="hidden">
+                    {background.attributes.features.map((feat: any) => (
+                        
+                        feat.children.map((child: any) => (
+                            <p>{child.text}</p>
+                        ))
+                        
+                    ))}
+                </div>
+        ))}
+    </div>
 </form>
 <script>
     const selector = document.querySelector('#progress-4-background');
